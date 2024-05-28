@@ -1,0 +1,82 @@
+Minimum Viable Product (MVP) for URL Shortener Web Application
+Introduction
+This document outlines the Minimum Viable Product (MVP) for my URL shortener web application. The focus is on delivering core functionalities with a user-friendly interface, ensuring a successful initial deployment and user testing phase.
+User Experience (UX) Goals
+Simple and Intuitive: The application will have a clean and uncluttered interface for easy URL submission and shortened link display.
+Accessibility: The application will be accessible without requiring user account creation or personal information disclosure. This caters to a wider audience and streamlines the user experience for potential employers evaluating my skills.
+MVP Scope
+URL Shortening: Users can submit long URLs through a designated input field.
+Unique Short Code Generation: The application will generate unique and random short codes for each submitted URL.
+Redirection: Clicking on a shortened URL will automatically redirect the user to the original long URL.
+User Interface: A basic web interface will allow users to interact with the application for submitting URLs and viewing shortened versions.
+Development Shortcuts
+Database (Optional): For the initial MVP, I may explore using a lightweight file system approach (like storing shortened URLs and mappings in a text file) instead of a full-fledged database like MySQL. This simplifies initial development and allows me to focus on core functionalities. However, I will clearly document this as a shortcut and plan to migrate to a database in future iterations for scalability and improved data management.
+Testing and Deployment
+I will perform thorough unit testing of individual functionalities to ensure they work as expected.
+Manual testing will simulate user interactions and various scenarios to identify potential usability issues or edge cases.
+Once testing is complete, I plan to deploy the application to a free hosting platform like Heroku for easy accessibility and demonstration purposes.
+Documentation
+I will create clear and concise documentation outlining the project goals, architecture, and functionalities. This will be helpful for future development and potential improvements.
+Success Criteria
+A successful MVP launch will include: 
+A functional URL shortener web application with core functionalities.
+A user-friendly interface that allows users to easily submit URLs and access shortened links.
+Successful deployment to a public platform for demonstration purposes.
+2. Architecture
+
+
+
+
+APIs and Methods: Streamlined Communication Channels
+My URL shortener MVP will leverage a well-defined set of APIs to facilitate seamless communication between the web client (user interface) and the web server. Here's a breakdown of the core functionalities I envision:
+1. Shorten URL (POST /shorten):
+This API route is the heart of the application. When a user submits a long URL through the web interface, the web client will utilize a POST request to this endpoint. The request body will contain the long URL as the payload.
+Personal Touch:  This API route is designed with user experience in mind. The POST method ensures a clean separation of concerns and prevents sensitive data (long URLs) from being exposed in the URL itself.
+
+
+
+2. Retrieve Shortened URL (GET /:shortCode):
+This API route caters to the redirection functionality. When a user clicks on a shortened URL (containing the short code), the web client will trigger a GET request to this endpoint. The :shortCode portion of the URL will be dynamically replaced with the actual short code received.
+Personal Touch:  I've opted for a user-friendly approach by utilizing a simple and intuitive route structure that leverages a placeholder for the short code.  This makes it easier for users to understand and potentially even predict the format of shortened URLs.
+3. Error Handling (Various Status Codes):
+While I strive to create a robust application, unforeseen situations can arise.  Therefore, I plan to implement a comprehensive error handling mechanism through various HTTP status codes.
+Personal Touch:  I go the extra mile!  Beyond generic error messages, I aim to provide detailed and informative error codes that indicate the specific issue encountered. This will assist with debugging and troubleshooting any potential problems.
+4. Future Considerations:
+These initial API routes provide a solid foundation for the MVP.  Looking ahead, I envision potential future enhancements:
+Shortened URL Statistics (GET /:shortCode/stats): This route could provide valuable data on the number of clicks a shortened URL receives, offering insights into user engagement.
+Custom Short Code Generation (POST /shorten/custom): This feature would allow power users to create custom short codes for better organization and branding. Some of these area future additions to my Url  web application.
+My Commitment:
+These API routes represent a starting point, and I'm committed to continuously refining and expanding them as the application evolves.  My aim is to build a web app with a  good user experience and one that’s  user friendly.
+
+
+
+
+
+Data Modelling
+
+User Stories 
+Deborah Joshua: As a content creator who juggles multiple social media platforms, I need a way to quickly shorten long URLs directly within my workflow. I want to enter a long URL in a dedicated field on my web interface. Once I click "Shorten," the application should validate the URL and, if it's legit, generate a unique and random short code. The shortened URL, combining the short code with my application's base domain, should be displayed right there on the same webpage. This way, I can easily copy and paste it for sharing on Twitter, Facebook, or wherever my content shines.
+Acceptance Criteria:
+My web interface must have a clear and readily accessible field for pasting long URLs.
+The application should validate the URL format (like HTTP or HTTPS) to avoid any hiccups.
+When I submit a valid URL, a one-of-a-kind short code should be generated on the spot.
+The shortened URL, made by combining the short code with my application's domain, should be displayed prominently on the webpage.
+The user interface should offer a user-friendly way for me to copy the shortened URL, like a handy "Copy" button.
+Isaac Aboderin: For me, every Click Counts: Imagine I've shortened a URL, and now it's time to share! Whether I click on the shortened URL displayed on my webpage or encounter it anywhere online pointing back to my application, I want the experience to be seamless. The application should recognize the short code embedded within the shortened URL and automatically redirect me to the original long URL I submitted earlier.
+Acceptance Criteria:
+Clicking on a shortened URL (containing the short code) should trigger a request straight to my application's server.
+The application should identify the short code within the shortened URL, like a secret handshake.
+It should then look up the long URL associated with that specific short code in the data storage solution (file system for the MVP).
+Upon successful retrieval, the application should initiate a redirection process, sending my browser directly to the original long URL.
+Femi James:  As someone who values privacy, I want the application to display a clear and concise privacy policy. This policy should outline how my data, such as the long URLs I submit, is stored and used.
+Acceptance Criteria:
+My application should have a dedicated section or webpage specifically for its privacy policy.
+The policy should be written in clear and easy-to-understand language, ditching the technical jargon.
+It should explain what data is collected (long URLs in the MVP), how it's used (for shortening purposes only), and for how long it's retained.
+The policy should also outline my rights regarding my data, such as the ability to request deletion if needed.
+These user stories prioritize a user-centric approach, ensuring my URL shortener MVP offers a functional, efficient, and privacy-conscious experience for content creators like myself.
+
+
+Conclusion
+ This MVP approach ensures a focused and achievable development process for the URL shortener application.  
+
