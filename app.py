@@ -9,6 +9,9 @@ def establish_database_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
+# Create a Flask application object
+app = Flask(__name__)
+
 
 def create_short_url(original_url):
     """Creates a shortened URL for the provided original URL.
@@ -80,22 +83,38 @@ def redirect_to_original_url(encoded_id):
 
 
 def retrieve_url_statistics():
-    """Retrieves URL statistics from the database.
+  """Retrieves URL statistics from the database and prepares data for Chart.js.
 
-    Returns:
-        list: A list of dictionaries containing URL information.
-    """
-    conn = establish_database_connection()
-    db_urls = conn.execute('SELECT id, created, original_url, clicks FROM urls').fetchall()
-    conn.close()
+  Returns:
+    tuple: A tuple containing two elements:
+      - list: A list of dictionaries containing URL information.
+      - dict: A dictionary containing data formatted for Chart.js.
+  """
+  conn = establish_database_connection()
+  db_urls = conn.execute('SELECT id, created, original_url, clicks FROM urls').fetchall()
+  conn.close()
 
-    urls = []
-    for url in db_urls:
-        url = dict(url)
-        url['short_url'] = request.host_url + hashids.encode(url['id'])
-        urls.append(url)
+  urls = []
+  chart_labels = []
+  chart_data = []
+  for url in db_urls:
+    url = dict(url)
+    url['short_url'] = request.host_url + hashids.encode(url['id'])
+    urls.append(url)
+    chart_labels.append(url['short_url'])
+    chart_data.append(url['clicks'])
 
-    return urls
+  chart_data_dict = {
+      'labels': chart_labels,
+      'datasets': [{
+          'label': 'Clicks',
+          'data': chart_data,
+          'backgroundColor': ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', ...]
+      }]
+  }
+
+  return urls, chart_data_dict
+
 
 
 if __name__ == '__main__':
@@ -107,5 +126,5 @@ if __name__ == '__main__':
     app.route('/<encoded_id>')(redirect_to_original_url)  # Redirect based on encoded ID
     app.route('/stats')(retrieve_url_statistics)  # Route for displaying statistics
 
-    app.run(debug=True)
+    app.run(debug=True, port=5000)
 

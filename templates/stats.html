@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{% block title %} URL Shortener Statistics {% endblock %}</h1>
+
+  <div class="row">
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="card-title mb-0">Top 5 Shortened URLs</h5>
+          <a href="#" class="text-muted">View More</a>
+        </div>
+        <ul class="list-group list-group-flush">
+          {% for url in top_urls %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <a href="{{ url['short_url'] }}" target="_blank" class="text-decoration-none">{{ url['short_url'] }}</a>
+              <span class="badge badge-primary badge-pill">{{ url['clicks'] }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-sm">
+        <div class="card-header">
+          <h5 class="card-title mb-0">Overall Click Breakdown</h5>
+        </div>
+        <canvas id="clicks-chart" width="400" height="200"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <table class="table table-sm table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Short</th>
+        <th scope="col">Original</th>
+        <th scope="col">Clicks</th>
+        <th scope="col">Creation Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for url in urls %}
+        <tr>
+          <th scope="row">{{ url['id'] }}</th>
+          <td>{{ url['short_url'] }}</td>
+          <td>{{ url['original_url'] }}</td>
+          <td>{{ url['clicks'] }}</td>
+          <td>{{ url['created'] }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const ctx = document.getElementById('clicks-chart');
+    const clicksChart = new Chart(ctx, {
+      // Chart configuration for click breakdown visualization (e.g., bar chart, pie chart)
+      type: 'bar', // Replace with desired chart type
+      data: {
+        labels: [ /* List of labels for data points */ ],
+        datasets: [{
+          label: 'Clicks',
+          data: [ /* Array of click counts for each label */ ],
+          backgroundColor: [ /* Array of colors for data points */ ],
+          borderColor: [ /* Array of border colors for data points */ ],
+          borderWidth: 1
+        }]
+      },
+      // Additional chart options (e.g., legend, scales)
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+
+    // Populate chart data from `urls` context variable
+    const labels = [];
+    const clicksData = [];
+    const colors = []; // Define color scheme for chart
+
+    {% for url in urls %}
+      labels.push('{{ url.short_url }}');
+      clicksData.push({{ url.clicks }});
+      colors.push('rgba(..., 0.7)'); // Example color with opacity
+    {% endfor %}
+
+    clicksChart.data.labels = labels;
+    clicksChart.data.datasets[0].data = clicksData;
+    clicksChart.data.datasets[0].backgroundColor = colors;
+    clicksChart.update();
+  </script>
+{% endblock %}
+

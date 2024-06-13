@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h1 class="text-center display-4 mb-5">Shorten your Links with Style!</h1>
+
+  <form id="shorten-url-form" method="post" class="d-flex justify-content-center mb-4">
+    <div class="form-group mr-2">
+      <label for="url" class="sr-only">Enter URL Here</label>
+      <input type="text" id="url" name="url" class="form-control form-control-lg" placeholder="Paste your long URL..." required autofocus>
+      <div id="url-error" class="text-danger"></div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-lg">Shorten!</button>
+  </form>
+
+  <div id="shortened-url" class="text-center d-none mb-5">
+    <p class="lead">Your shortened URL:</p>
+    <a id="short-url-link" class="h4 text-decoration-none" target="_blank" rel="noopener noreferrer">...</a>
+    <button id="copy-to-clipboard" class="btn btn-outline-primary ml-2">Copy</button>
+    <div id="qr-code-container" class="mt-3 d-none"></div>
+  </div>
+
+  <div id="loading" class="text-center d-none">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+  <script>
+    const shortenUrlForm = document.getElementById('shorten-url-form');
+    const urlInput = document.getElementById('url');
+    const urlError = document.getElementById('url-error');
+    const shortenedUrl = document.getElementById('shortened-url');
+    const shortUrlLink = document.getElementById('short-url-link');
+    const copyToClipboardBtn = document.getElementById('copy-to-clipboard');
+    const loadingIndicator = document.getElementById('loading');
+    const qrCodeContainer = document.getElementById('qr-code-container');
+
+    shortenUrlForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      urlError.textContent = '';
+      loadingIndicator.classList.remove('d-none');
+      shortenedUrl.classList.add('d-none');
+
+      const url = urlInput.value.trim();
+
+      // Implement URL validation logic here (using regular expressions)
+      if (!isValidUrl(url)) {
+        urlError.textContent = 'Please enter a valid URL.';
+        loadingIndicator.classList.add('d-none');
+        return;
+      }
+
+      try {
+        const response = await fetch('/shorten', {
+          method: 'POST',
+          body: JSON.stringify({ url }),
+          headers: { 'Content-Type': 'application/json' }
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to shorten URL.');
+        }
+
+        const data = await response.json();
+        const shortenedLink = data.shortened_url;
+
+        shortUrlLink.textContent = shortenedLink;
+        shortUrlLink.href = shortenedLink;
+        shortenedUrl.classList.remove('d-none');
+        loadingIndicator.classList.add('d-none');
+
+        // Generate QR code using a JavaScript library like "qrcode.js" and store it in qrCodeContainer
+        const qrcode = new QRCode(qrCodeContainer, {
+          text: shortenedLink,
+          width: 128,
+          height: 128,
+          colorDark: '#007bff'
+        });
+        qrCodeContainer.classList.remove('d-none');
+
+      } catch (error) {
+        console.error(error);
+        // Display a user-friendly error message
+      }
+    });
+
+    copyToClipboardBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(shortUrlLink.href)
+        .then(() => {
+          copyToClipboardBtn.textContent = 'Copied!';
+        })
+        .catch(() => {
+          copyToClipboardBtn.textContent = 'Copy Failed';
+        });
+    });
+  </
+

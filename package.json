@@ -1,0 +1,11 @@
+{
+  "name": "Url Shortner",  
+  "version": "1.0.0", 
+  "description": "A short description of your Url-Shortener project",
+  "repository": "https://github.com/eazytbay/Url-shortener", 
+  "license": "MIT",  // You can choose a different license if needed
+  "dependencies": {
+    "chart.js": "^4.4.3" 
+  }
+}
+

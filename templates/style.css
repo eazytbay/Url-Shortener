@@ -1,0 +1,138 @@
+/* Base Styles */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f2f5f7;
+  color: #333;
+}
+
+.container {
+  max-width: 1024px;
+  padding: 2rem;
+  margin: 0 auto;
+}
+
+/* Header */
+header {
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.nav-link {
+  color: #333;
+  padding: 0.75rem 1.25rem;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+.nav-link:hover {
+  color: #007bff;
+}
+
+.active {
+  font-weight: bolder;
+  border-bottom: 2px solid #007bff;
+}
+
+/* Main Content */
+main {
+  padding-top: 3rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+/* Cards */
+.card {
+  background-color: #fff;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  margin-bottom: 0;
+}
+
+/* Tables */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 0.75rem 1rem;
+  vertical-align: middle;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+th {
+  background-color: #f2f5f7;
+  color: #333;
+}
+
+/* Charts (Placeholder Styles) */
+#clicks-chart {
+  height: 300px; /* Adjust based on your needs */
+}
+
+/* Utility Classes */
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: #888;
+}
+
+.badge {
+  padding: 0.5em 0.75em;
+  font-size: 0.875em;
+  border-radius: 1rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.badge-primary {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Links */
+a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+  color: #0056b3;
+}
